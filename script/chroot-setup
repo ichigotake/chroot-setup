@@ -1,0 +1,91 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use feature 'say';
+use Cwd qw(chdir cwd);
+use File::Basename qw(dirname);
+use File::Copy qw(copy);
+use File::Path qw(mkpath);
+
+my $cmd = shift(@ARGV) // help();
+my $target_dir = shift(@ARGV) // die "Species directory name";
+my @args = @ARGV;
+
+my %commands = (
+    new => \&cmd_new,
+    add => \&cmd_add,
+);
+
+$commands{$cmd}->($target_dir, @args);
+
+sub help {
+    die "Please species sub command";
+}
+
+sub cmd_add {
+    my ($target_dir, @components) = @_;
+    chdir $target_dir;
+    for my $c (@components) {
+        add_component($c);
+    }
+}
+
+sub cmd_new {
+    my ($new_dir) = @_;
+    mkdir $new_dir;
+    chdir $new_dir;
+    add_component("/bin/bash");
+    `mkdir dev && mount -t devfs devfs dev`;
+    say "Created!: " . cwd();
+}
+
+sub otool {
+    my ($target) = @_;
+    my @libs = ();
+    for my $line (`otool -L "$target"`) {
+        my ($lib) = $line =~ m/\s+(.*?) \(.+/;
+        if ($lib) {
+            push(@libs, $lib);
+        }
+    }
+    return @libs;
+}
+
+sub add_component {
+    my ($component) = @_;
+    my %created_dir = ();
+    my @deps = fetch_deps_libs($component);
+    for my $lib (@deps) {
+        my $dirname = dirname($lib);
+        $dirname =~ s.^/..;
+        if (!exists($created_dir{$dirname})) {
+            mkpath $dirname;
+            $created_dir{$dirname} = 1;
+        }
+        copy($lib, $dirname);
+    }
+}
+
+sub fetch_deps_libs {
+    my @need = @_;
+    my %done = ();
+    
+    while (@need) {
+        my @needed = @need;
+        @need = ();
+        for my $n (@needed) {
+            my @done = keys %done;
+            next if grep {$n eq $_} @done;
+            for my $l (otool($n)) {
+                unless (grep {$l eq $_} @done) {
+                    push(@need, $l);
+                }
+                $done{$n} = 1;
+            }
+        }
+    }
+
+    return sort keys(%done);    
+}
+
