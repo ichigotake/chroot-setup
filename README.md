@@ -13,8 +13,9 @@ $ chroot-setup [directory] [sub_command] [args...]
 ### add
 
 ```sh
-$ chroot-setup add my-container /usr/bin/env
-$ ls ./my-container
+$ chroot-setup add /path/to/my-container /usr/bin/env
+$ ls -l /path/to/my-container/usr/bin/env
+-rw-r--r--  1 ichigotake  staff  14224  8 31 13:49 /path/to/my-container/usr/bin/env
 ```
 
 ### new
