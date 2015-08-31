@@ -1,0 +1,4 @@
+name = "setup-chroot.pl"
+# badges = ["travis"]
+module_maker="ModuleBuildTiny"
+
