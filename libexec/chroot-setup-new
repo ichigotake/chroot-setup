@@ -1,12 +1,42 @@
-#!/usr/bin/env sh
+#!/usr/bin/env perl
 
-set -e
+use strict;
+use warnings;
+use Cwd qw(cwd realpath);
+use File::Basename;
+use feature qw (say);
 
-new_dir=$1
-script_dir=$(cd -P $(dirname $0) && pwd -P)
+my $new_dir = $ARGV[0] // die;
+my $script_dir = realpath(dirname($0));
+my $uname = sub {
+    my $name = `uname`;
+    chomp $name;
+    return $name;
+}->();
 
-mkdir -p $new_dir/dev
-"$script_dir/chroot-setup-cp" "$new_dir" /bin/bash
-cd "$new_dir" && mount -t devfs devfs dev && cd - > /dev/null
+my $init;
+if ($uname eq 'Darwin') {
+    $init = \&init_osx;
+} elsif ($uname eq 'OpenBSD') {
+    $init = \&init_openbsd;
+} else {
+    die 'Unsupported environment: ' . $uname;
+}
 
-echo "Created!:" `pwd`
+`mkdir -p $new_dir/dev`;
+$init->($new_dir);
+
+say "Created!:" . cwd;
+
+sub init_osx {
+    my ($new_dir) = @_;
+    `"$script_dir/chroot-setup-cp" "$new_dir" /bin/bash`;
+    `cd "$new_dir" && mount -t devfs devfs dev && cd - > /dev/null`;
+}
+
+sub init_openbsd {
+    my ($new_dir) = @_;
+    `"$script_dir/chroot-setup-cp" "$new_dir" /bin/ksh`;
+    `cd "$new_dir/dev" && mknod zero c 13 12 && mknod null c 13 2 && mknod tty c 1 0 && chmod 666 *`;
+}
+

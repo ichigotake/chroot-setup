@@ -16,6 +16,8 @@ my $uname = sub {
 my $fetch_deps;
 if ($uname eq 'Darwin') {
     $fetch_deps = \&otool;
+} elsif ($uname eq 'OpenBSD') {
+    $fetch_deps = \&ldd;
 } else {
     die 'Unsupported environment: ' . $uname;
 }
@@ -49,3 +51,17 @@ sub otool {
     }
     return @libs;
 }
+
+sub ldd {
+    my ($target) = @_;
+
+    my @libs = ();
+    for my $line (`ldd "$target"`) {
+        my ($lib) = $line =~ m/(?:\s+\S+){6}\s+(.*?)$/;
+        if ($lib && $lib =~ m.^/.) {
+            push(@libs, $lib);
+        }
+    }
+    return @libs;
+}
+
