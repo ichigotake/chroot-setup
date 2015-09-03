@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+set -e
+
+new_dir=$1
+script_dir=$(cd -P $(dirname $0) && pwd -P)
+
+mkdir -p $new_dir/dev
+"$script_dir/chroot-setup-cp" "$new_dir" /bin/bash
+cd "$new_dir" && mount -t devfs devfs dev && cd - > /dev/null
+
+echo "Created!:" `pwd`
