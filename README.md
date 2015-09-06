@@ -8,6 +8,11 @@ chroot-setup - [WIP] Set up utility for chroot(2)
 $ chroot-setup [directory] [sub_command] [args...]
 ```
 
+## SUPPORT ENVIRONMENT
+
+- Mac OS X 10.10.4 / bash
+- OpenBSD 5.7 / ksh
+
 ## INSTALLATION
 
 ### Basic GitHub Checkout
