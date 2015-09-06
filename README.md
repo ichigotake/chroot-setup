@@ -72,10 +72,10 @@ $ ls -l /path/to/my-container/usr/bin/env
 ### chroot-setup deps
 
 
-### chroot-setup new
+### chroot-setup init
 
 ```sh
-$ chroot-setup new /path/to/my-container
+$ chroot-setup init /path/to/my-container
 Created!: /path/to/my-container
 
 $ tree my-container
