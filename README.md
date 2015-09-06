@@ -5,7 +5,7 @@ chroot-setup - [WIP] Set up utility for chroot(2)
 ## SYNOPSYS
 
 ```sh
-$ chroot-setup [directory] [sub_command] [args...]
+$ chroot-setup [sub_command] [directory] [args...]
 ```
 
 ## SUPPORT ENVIRONMENT
