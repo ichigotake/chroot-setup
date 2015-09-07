@@ -69,13 +69,56 @@ first argument. The most common subcommands are:
 ### chroot-setup cp
 
 ```sh
-$ chroot-setup add /path/to/my-container /usr/bin/env
+$ chroot-setup cp /path/to/my-container /usr/bin/env
 $ ls -l /path/to/my-container/usr/bin/env
 -rw-r--r--  1 ichigotake  staff  14224  8 31 13:49 /path/to/my-container/usr/bin/env
 ```
 
 ### chroot-setup deps
 
+List dynamic object dependencies(with `ldd` or `otool`).
+
+```sh
+$ chroot-setup deps `whereis bash`
+/bin/bash
+/usr/lib/libDiagnosticMessagesClient.dylib
+/usr/lib/libSystem.B.dylib
+/usr/lib/libauto.dylib
+/usr/lib/libc++.1.dylib
+/usr/lib/libc++abi.dylib
+/usr/lib/libncurses.5.4.dylib
+/usr/lib/libobjc.A.dylib
+/usr/lib/system/libcache.dylib
+/usr/lib/system/libcommonCrypto.dylib
+/usr/lib/system/libcompiler_rt.dylib
+/usr/lib/system/libcopyfile.dylib
+/usr/lib/system/libcorecrypto.dylib
+/usr/lib/system/libdispatch.dylib
+/usr/lib/system/libdyld.dylib
+/usr/lib/system/libkeymgr.dylib
+/usr/lib/system/liblaunch.dylib
+/usr/lib/system/libmacho.dylib
+/usr/lib/system/libquarantine.dylib
+/usr/lib/system/libremovefile.dylib
+/usr/lib/system/libsystem_asl.dylib
+/usr/lib/system/libsystem_blocks.dylib
+/usr/lib/system/libsystem_c.dylib
+/usr/lib/system/libsystem_configuration.dylib
+/usr/lib/system/libsystem_coreservices.dylib
+/usr/lib/system/libsystem_coretls.dylib
+/usr/lib/system/libsystem_dnssd.dylib
+/usr/lib/system/libsystem_info.dylib
+/usr/lib/system/libsystem_kernel.dylib
+/usr/lib/system/libsystem_m.dylib
+/usr/lib/system/libsystem_malloc.dylib
+/usr/lib/system/libsystem_network.dylib
+/usr/lib/system/libsystem_networkextension.dylib
+/usr/lib/system/libsystem_notify.dylib
+/usr/lib/system/libsystem_platform.dylib
+/usr/lib/system/libsystem_pthread.dylib
+/usr/lib/system/libsystem_sandbox.dylib
+/usr/lib/system/libsystem_secinit.dylib
+```
 
 ### chroot-setup init
 
