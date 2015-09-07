@@ -1,0 +1,24 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Cwd qw(chdir realpath);
+use File::Basename;
+use File::Copy qw(copy);
+use File::Path qw(mkpath);
+
+my ($container_dir, @targets) = @ARGV;
+
+my %created_dir = ();
+my $script_dir = realpath(dirname($0));
+my @deps = split($/, `$script_dir/chroot-setup-deps @targets`);
+for my $lib (@deps) {
+    my $dirname = dirname($lib);
+    $dirname =~ s.^/..;
+    my $target_path = "$container_dir/$dirname";
+    if (!exists($created_dir{$dirname})) {
+        mkpath $target_path;
+        $created_dir{$dirname} = 1;
+    }
+    copy($lib, $target_path);
+}

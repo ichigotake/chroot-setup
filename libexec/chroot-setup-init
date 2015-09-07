@@ -1,0 +1,42 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Cwd qw(cwd realpath);
+use File::Basename;
+use feature qw (say);
+
+my $init_dir = $ARGV[0] // die;
+my $script_dir = realpath(dirname($0));
+my $uname = sub {
+    my $name = `uname`;
+    chomp $name;
+    return $name;
+}->();
+
+my $init;
+if ($uname eq 'Darwin') {
+    $init = \&init_osx;
+} elsif ($uname eq 'OpenBSD') {
+    $init = \&init_openbsd;
+} else {
+    die 'Unsupported environment: ' . $uname;
+}
+
+`mkdir -p $init_dir/dev`;
+$init->($init_dir);
+
+say "Created!:" . cwd;
+
+sub init_osx {
+    my ($init_dir) = @_;
+    `"$script_dir/chroot-setup-cp" "$init_dir" /bin/bash`;
+    `cd "$init_dir" && mount -t devfs devfs dev && cd - > /dev/null`;
+}
+
+sub init_openbsd {
+    my ($init_dir) = @_;
+    `"$script_dir/chroot-setup-cp" "$init_dir" /bin/ksh`;
+    `cd "$init_dir/dev" && mknod zero c 13 12 && mknod null c 13 2 && mknod tty c 1 0 && chmod 666 *`;
+}
+

@@ -1,0 +1,67 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use feature 'say';
+
+my @need = @ARGV;
+my %done = ();
+
+my $uname = sub {
+    my $name = `uname`;
+    chomp $name;
+    return $name;
+}->();
+
+my $fetch_deps;
+if ($uname eq 'Darwin') {
+    $fetch_deps = \&otool;
+} elsif ($uname eq 'OpenBSD') {
+    $fetch_deps = \&ldd;
+} else {
+    die 'Unsupported environment: ' . $uname;
+}
+
+while (@need) {
+    my @needed = @need;
+    @need = ();
+    for my $n (@needed) {
+        my @done = keys %done;
+        next if grep {$n eq $_} @done;
+        for my $l ($fetch_deps->($n)) {
+            unless (grep {$l eq $_} @done) {
+                push(@need, $l);
+            }
+            $done{$n} = 1;
+        }
+    }
+}
+
+say join($/, sort keys(%done));    
+
+
+sub otool {
+    my ($target) = @_;
+    my @libs = ();
+    for my $line (`otool -L "$target"`) {
+        my ($lib) = $line =~ m/\s+(.*?) \(.+/;
+        if ($lib) {
+            push(@libs, $lib);
+        }
+    }
+    return @libs;
+}
+
+sub ldd {
+    my ($target) = @_;
+
+    my @libs = ();
+    for my $line (`ldd "$target"`) {
+        my ($lib) = $line =~ m/(?:\s+\S+){6}\s+(.*?)$/;
+        if ($lib && $lib =~ m.^/.) {
+            push(@libs, $lib);
+        }
+    }
+    return @libs;
+}
+

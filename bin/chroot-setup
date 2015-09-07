@@ -1,0 +1,16 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Cwd qw(realpath);
+use File::Basename;
+
+my $cmd = $ARGV[0] // &help();
+my @args = $#ARGV ? @ARGV[1..$#ARGV] : ();
+my $script_dir = realpath(dirname($0)) . '/../libexec';
+
+print `"$script_dir/chroot-setup-$cmd" @args`;
+
+sub help {
+    die "TODO: Writing help";
+}
