@@ -15,9 +15,7 @@ chroot-setup - [WIP] Set up utility for chroot(8)
 
 ## STATUS
 
-Develop for me.
-
-**Because changes API without notice.**
+**Changes API without notice because develop for me.**
 
 ## SUPPORT ENVIRONMENT
 
