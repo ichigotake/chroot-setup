@@ -17,7 +17,7 @@ chroot-setup - [WIP] Set up utility for chroot(8)
 
 **Changes API without notice because develop for me.**
 
-If interesting to this, feedoback to [issues](https://github.com/ichigotake/chroot-setup/issues) or [@ichigotake](https://github.com/ichigotake).
+If interesting to this, feedoback to [issues](https://github.com/ichigotake/chroot-setup/issues) or [ichigotake](https://github.com/ichigotake).
 
 ## SUPPORT ENVIRONMENT
 
