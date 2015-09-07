@@ -2,10 +2,15 @@
 
 chroot-setup - [WIP] Set up utility for chroot(2)
 
-## SYNOPSYS
+## SYNOPSIS
 
 ```sh
-$ chroot-setup [sub_command] [directory] [args...]
+## chroot-setup [sub_command] [directory] [args...]
+
+% chroot-setup init /path/to/my-container
+% chroot-setup cp /path/to/my-container `whereis ls` `whereis env`
+% chroot my-container
+[my-container]% env ls
 ```
 
 ## SUPPORT ENVIRONMENT
