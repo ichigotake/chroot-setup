@@ -13,6 +13,12 @@ chroot-setup - [WIP] Set up utility for chroot(8)
 [my-container]% env ls
 ```
 
+## STATUS
+
+Develop for me.
+
+**Because changes API without notice.**
+
 ## SUPPORT ENVIRONMENT
 
 - Mac OS X 10.10.4 / bash
