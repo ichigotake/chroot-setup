@@ -162,7 +162,7 @@ This library is free software; you can redistribute it and/or modify it under th
 
 ### plenv
 
-Most of part was inspired from plenv.
+Most of part was inspired from [plenv](https://github.com/tokuhirom/plenv).
 
 ```
 Copyright (C) Tokuhiro Matsuno
