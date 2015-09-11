@@ -38,7 +38,7 @@ If interesting to this, feedoback to [issues](https://github.com/ichigotake/chro
     $ echo 'export PATH="$HOME/.chroot-setup/bin:$PATH"' >> ~/.bash_profile
     ~~~
     
-    **Ubuntu note: Modify your ~/.profile instead of ~/.bash_profile.**
+    **OpenBSD note: Modify your ~/.profile instead of ~/.bash_profile.**
     
     **Zsh note: Modify your ~/.zshrc file instead of ~/.bash_profile.**
 
