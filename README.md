@@ -8,7 +8,7 @@ chroot-setup - [WIP] Set up utility with chroot(8)
 ## chroot-setup [sub_command] [directory] [args...]
 
 % chroot-setup init /path/to/my-container
-% chroot-setup cp /path/to/my-container `whereis ls` `whereis env`
+% chroot-setup add /path/to/my-container `whereis ls` `whereis env`
 % chroot my-container
 [my-container]% env ls
 ```
@@ -72,10 +72,10 @@ $ git checkout 2.0.0
 Like `git`, the `chroot-setup` command delegates to subcommands based on its
 first argument. The most common subcommands are:
 
-### chroot-setup cp
+### chroot-setup add
 
 ```sh
-$ chroot-setup cp /path/to/my-container /usr/bin/env
+$ chroot-setup add /path/to/my-container /usr/bin/env
 $ ls -l /path/to/my-container/usr/bin/env
 -rw-r--r--  1 ichigotake  staff  14224  8 31 13:49 /path/to/my-container/usr/bin/env
 ```
