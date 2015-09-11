@@ -154,6 +154,18 @@ ichigotake <ichigotake.san@ GMAIL COM>
 
 ## LICENSE
 
+### chroot-setup itself
+
 Copyright (C) ichigotake
 
 This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+
+### plenv
+
+Most of part was inspired from plenv.
+
+```
+Copyright (C) Tokuhiro Matsuno
+
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+```

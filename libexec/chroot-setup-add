@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use Cwd qw(chdir realpath);
 use File::Basename;
-use File::Copy qw(copy);
 use File::Path qw(mkpath);
 
 my ($container_dir, @targets) = @ARGV;
@@ -20,5 +19,5 @@ for my $lib (@deps) {
         mkpath $target_path;
         $created_dir{$dirname} = 1;
     }
-    copy($lib, $target_path);
+    `cp -a "$lib" "$target_path"`;
 }
