@@ -1,6 +1,6 @@
 # NAME
 
-chroot-setup - [WIP] Set up utility with chroot(8)
+chroot-setup - Set up utility with chroot(8)
 
 ## SYNOPSIS
 
