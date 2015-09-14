@@ -59,14 +59,6 @@ $ cd ~/.chroot-setup
 $ git pull
 ~~~
 
-To use a specific release of chroot-setup, check out the corresponding tag:
-
-~~~ sh
-$ cd ~/.chroot-setup
-$ git fetch
-$ git checkout 2.0.0
-~~~
-
 ## Command Reference
 
 Like `git`, the `chroot-setup` command delegates to subcommands based on its
